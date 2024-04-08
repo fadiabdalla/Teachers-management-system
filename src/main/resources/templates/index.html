@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>All Teachers</h2>
+    <!-- Add Teacher Button -->
+    <a th:href="@{/add-teacher}" class="btn btn-primary btn-sm">Add Teacher</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over teachers and display them -->
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.teacherId}"></td>
+            <td th:text="${teacher.firstName}"></td>
+            <td th:text="${teacher.lastName}"></td>
+            <td th:text="${teacher.email}"></td>
+            <td>
+            <td>
+                <!-- Link to edit teacher -->
+                <a th:href="@{/edit-teacher/{teacherId}(teacherId=${teacher.teacherId})}" class="btn btn-primary btn-sm">Update</a>
+            </td>
+            <td>
+                <!-- Delete Form -->
+                <form th:action="@{'/delete-teacher/' + ${teacher.teacherId}}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this teacher?')" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
